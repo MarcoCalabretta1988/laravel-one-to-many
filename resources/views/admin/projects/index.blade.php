@@ -29,6 +29,7 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Type</th>
             <th scope="col">Status</th>
             <th scope="col">Create At</th>
             <th scope="col">Update At</th>
@@ -40,6 +41,7 @@
             <tr>    
             <th scope="row">{{$project->id}}</th>
             <td>{{$project->name}}</td>
+            <td><span class="badge text-bg-primary">{{$project->type?->label}}</span></td>
             <td>
               
               <form action="{{ route('admin.projects.toggle', $project->id)}}" method="POST">
