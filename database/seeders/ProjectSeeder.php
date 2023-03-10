@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use Illuminate\Support\Arr;
 
 class ProjectSeeder extends Seeder
 {
@@ -14,8 +16,11 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for ($i = 0; $i < 6; $i++) {
+        $type_ids = Type::select('id')->pluck('id')->toArray();
+
+        for ($i = 0; $i < 10; $i++) {
             $project = new Project();
+            $project->type_id = Arr::random($type_ids);
             $project->name = $faker->words(3, true);
             $project->description = $faker->paragraphs(6, true);
             $project->github = "https://github.com/MarcoCalabretta1988";

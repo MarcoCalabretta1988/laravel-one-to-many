@@ -16,10 +16,13 @@
     <p>{{$project->description}}</p>
     <hr>
     <strong>Create at: </strong> <time>{{ $project->created_at}}</time>
-    <div>
-      <strong>Last update: </strong> <time>{{ $project->updated_at}}</time>
+    <div class="my-2">
+      <strong >Last update: </strong> <time>{{ $project->updated_at}}</time>
     </div>
-    <form action="{{ route('admin.projects.toggle', $project->id)}}" method="POST">
+    <div>
+      <strong>Type: </strong>{{$project->type?->label}}
+    </div>
+    <form action="{{ route('admin.projects.toggle', $project->id)}}" method="POST" class="my-2">
       @method('PATCH')
       @csrf
       <button type="submit" class="btn {{ $project->is_published ? 'text-success' : 'text-danger'}}">

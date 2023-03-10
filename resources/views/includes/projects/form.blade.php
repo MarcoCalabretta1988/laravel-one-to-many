@@ -20,7 +20,7 @@
 {{-- FORM INPUT FIELD --}}
 <div class="row py-5">
    
-    <div class="col-6">
+    <div class="col-4">
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name='name' placeholder="Name" minlength="1" maxlength="50"
@@ -31,6 +31,22 @@
                   <small class="text-muted">Inserisci il nome del progetto</small>
                 @enderror
         </div>
+    </div>
+
+    <div class="col-3">
+        <label for="Type" class="form-label">Type:</label>
+        <select class="form-select @error('type_id') is-invalid @enderror" id="type" name="type_id">
+            <option value="">None</option>
+            @foreach ($types as $type )
+                
+            <option @if(old('type_id',$project->type_id) == $type->id) selected @endif value="{{$type->id}}">{{$type->label}}</option>
+            @endforeach
+       
+          </select>
+          @error('type_id')
+          <div class="invalid-feedback">{{ $message}}</div>
+      
+       @enderror
     </div>
 
     <div class="col-4">
@@ -46,7 +62,7 @@
         </div>
     </div>
 
-    <div class="col-2">
+    <div class="col-1">
         <img src="{{ $project->image ? asset('storage/' . $project->image) : 'https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns='}}" alt="{{ old('name', $project->name) }}" class="img-fluid" id="img-prev">
     </div>
    
