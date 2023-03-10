@@ -24,8 +24,8 @@ Route::get('/', [GuestHomeController::class, 'index']);
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('/admin')->group(function () {
     Route::get('/admin', [AdminHomeController::class, 'index'])->name('home');
     Route::patch('/projects/{project}/toggle', [ProjectController::class, 'toggle'])->name('projects.toggle');
-    Route::resource('projects', ProjectController::class);
     Route::resource('types', TypeController::class);
+    Route::resource('projects', ProjectController::class);
 });
 
 

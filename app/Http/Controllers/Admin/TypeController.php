@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,6 +15,7 @@ class TypeController extends Controller
     public function index()
     {
         $types = Type::orderBy('updated_at', 'DESC')->Paginate(10);
+
         return view('admin.types.index', compact('types'));
     }
 
@@ -22,8 +24,9 @@ class TypeController extends Controller
      */
     public function create()
     {
-        $project = new Type();
-        return view('admin.type.create', compact('types'));
+        $type = new Type();
+        $select = Type::all();
+        return view('admin.types.create', compact('type', 'select'));
     }
 
     /**
@@ -62,7 +65,7 @@ class TypeController extends Controller
     public function edit(Type $type)
     {
 
-        return view('admin.projects.edit', compact('types'));
+        return view('admin.projects.edit', compact('type'));
     }
 
     /**

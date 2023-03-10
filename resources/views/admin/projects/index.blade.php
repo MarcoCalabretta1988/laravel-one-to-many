@@ -43,7 +43,7 @@
             <td>{{$project->name}}</td>
             <td>
               
-              @if($project->type->label)
+              @if($project->type)
               <span class="badge" style="background-color: {{$project->type->color}}">{{$project->type->label}}</span>
               @else
                   -

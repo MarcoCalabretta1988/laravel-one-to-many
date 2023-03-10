@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Projects')
+@section('title','Types')
 
 @section('content')
 
@@ -23,19 +23,32 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($typess as $type)
+            @foreach ($types as $type)
             <tr>    
             <th scope="row">{{$type->id}}</th>
             <td>{{$type->label}}</td>
             <td>{{$type->color}}</td>
+            <td>{{$type->created_at}}</td>
+            <td>{{$type->updated_at}}</td>
+            <td>
+              <div class="button-box d-flex justify-content-end">
+                 
+                  <a href="{{ route('admin.types.edit',$type->id)}}"class="btn btn-warning  btn-sm mx-2"><i class="fa-solid fa-pencil"></i></a>
+                 <form action="{{ route('admin.types.destroy' , $type->id)}}" method="POST" class="delete-form">
+                  @method('DELETE')
+                  @csrf
+                  <button  type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                 </form>
+              </div>
+              </td>
           </tr>
             @endforeach
         </tbody>
       </table>
       <div class="d-flex justify-content-end align-items-center">
     
-        @if($projects->hasPages())
-        {{ $projects->links()}}
+        @if($types->hasPages())
+        {{ $types->links()}}
         @endif
       </div>
 </section>
