@@ -41,7 +41,14 @@
             <tr>    
             <th scope="row">{{$project->id}}</th>
             <td>{{$project->name}}</td>
-            <td><span class="badge text-bg-primary">{{$project->type?->label}}</span></td>
+            <td>
+              
+              @if($project->type->label)
+              <span class="badge" style="background-color: {{$project->type->color}}">{{$project->type->label}}</span>
+              @else
+                  -
+              @endif
+            </td>
             <td>
               
               <form action="{{ route('admin.projects.toggle', $project->id)}}" method="POST">

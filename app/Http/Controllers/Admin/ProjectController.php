@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\Type;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,13 +20,15 @@ class ProjectController extends Controller
         $filter = $request->query('filter');
         $query = Project::orderBy('updated_at', 'DESC');
 
+        $types = Type::all();
+
         if ($filter) {
             $value = $filter === 'drafts' ? 0 : 1;
             $query->where('is_published', $value);
         }
 
         $projects = $query->Paginate(10);
-        return view('admin.projects.index', compact('projects', 'filter'));
+        return view('admin.projects.index', compact('projects', 'filter', 'types'));
     }
 
     /**
@@ -33,9 +36,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-
+        $types = Type::all();
         $project = new Project();
-        return view('admin.projects.create', compact('project'));
+        return view('admin.projects.create', compact('project', 'types'));
     }
 
     /**
@@ -48,6 +51,7 @@ class ProjectController extends Controller
             'name' => 'required|string| unique:projects| min:1| max:50',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'type_id' => 'nullable|exists:types,id'
         ], [
             'name.required' => 'Il campo nome é obbligatorio',
             'name.string' => 'Il nome deve essere una stringa',
@@ -58,9 +62,11 @@ class ProjectController extends Controller
             'description.string' => 'La descrizione deve essere una stringa',
             'image.image' => 'Il campo imagine deve essere un file',
             'image.mimes' => 'L\'immagine deve essere JPEG,PNG,JPG',
+            'type.id' => 'Tipo non valido'
         ]);
 
         $data = $request->all();
+
         $project = new Project();
 
         if (Arr::exists($data, 'image')) {
@@ -88,7 +94,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact(('project')));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -101,6 +108,7 @@ class ProjectController extends Controller
             'name' => ['required', 'string', Rule::unique('projects')->ignore($project->id), 'min:1', 'max:50'],
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'type_id' => 'nullable|exists:types,id'
         ], [
             'name.required' => 'Il campo nome é obbligatorio',
             'name.string' => 'Il nome deve essere una stringa',
@@ -111,6 +119,7 @@ class ProjectController extends Controller
             'description.string' => 'La descrizione deve essere una stringa',
             'image.image' => 'Il file deve essere un Immagine',
             'image.mimes' => 'L\'immagine deve essere JPEG,PNG,JPG',
+            'type.id' => 'Tipo non valido'
         ]);
 
         $data = $request->all();

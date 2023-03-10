@@ -20,7 +20,7 @@
       <strong >Last update: </strong> <time>{{ $project->updated_at}}</time>
     </div>
     <div>
-      <strong>Type: </strong>FrontEnd
+      <strong>Type: </strong>{{$project->type?->label}}
     </div>
     <form action="{{ route('admin.projects.toggle', $project->id)}}" method="POST" class="my-2">
       @method('PATCH')
