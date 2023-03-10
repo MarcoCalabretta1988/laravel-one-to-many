@@ -27,7 +27,7 @@
             <tr>    
             <th scope="row">{{$type->id}}</th>
             <td>{{$type->label}}</td>
-            <td>{{$type->color}}</td>
+            <td style="color: {{$type->color}}"><i class="fa-solid fa-droplet fa-2x"></i></td>
             <td>{{$type->created_at}}</td>
             <td>{{$type->updated_at}}</td>
             <td>
