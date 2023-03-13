@@ -1,3 +1,8 @@
+
+
+
+@dd($type);
+
 @if ($type->exists)
     <form action="{{ route('admin.types.update', $type->id) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
