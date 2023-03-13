@@ -65,7 +65,7 @@ class TypeController extends Controller
     public function edit(Type $type)
     {
 
-        return view('admin.projects.edit', compact('type'));
+        return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -90,7 +90,7 @@ class TypeController extends Controller
         ]);
         $data = $request->all();
         $type->update($data);
-        return to_route('admin.types.index')->with('type', 'success')->with('msg', 'Crezione avvenuta con successo');
+        return to_route('admin.types.index')->with('type', 'success')->with('msg', 'Modifica avvenuta con successo');
     }
 
     /**
